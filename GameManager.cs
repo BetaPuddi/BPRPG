@@ -1,39 +1,39 @@
-﻿using BPRPG.Entities;
+﻿using System;
+using BPRPG.Entities;
+using BPRPG.Locations;
+using BPRPG.Locations.CombatZones;
 
 namespace BPRPG
 {
     public class GameManager
     {
         public static GameManager Instance { get; private set; }
-
-        public GameManager()
-        {
-            Instance = this;
-        }
+        public Player PlayerEntity { get; private set; }
+        public CombatZone CurrentLocation { get; private set; }
 
         public static void StartGame()
         {
-            var player = new Player
+            Instance = new GameManager();
+            Instance.InitializePlayer();
+            Instance.InitializeLocation();
+            Cemetery.StartCombat();
+        }
+
+        private void InitializePlayer()
+        {
+            PlayerEntity = new Player
             {
                 Name = "Player",
                 MaxHealth = 100,
                 CurrentHealth = 100,
-                Attack = 10
+                Attack = 10,
+                Recovery = 10
             };
+        }
 
-            var enemy = new Enemy
-            {
-                Name = "Enemy",
-                MaxHealth = 50,
-                CurrentHealth = 50,
-                Attack = 5
-            };
-
-            while (player.CurrentHealth > 0 && enemy.CurrentHealth > 0)
-            {
-                player.TakeDamage(enemy.Attack);
-                enemy.TakeDamage(player.Attack);
-            }
+        private void InitializeLocation()
+        {
+            CurrentLocation = new Cemetery();
         }
     }
 }

@@ -43,6 +43,9 @@
         <Compile Include="Entities\Entity.cs" />
         <Compile Include="Entities\Player.cs" />
         <Compile Include="GameManager.cs" />
+        <Compile Include="Locations\CombatZones\Cemetery.cs" />
+        <Compile Include="Locations\CombatZones\CombatZone.cs" />
+        <Compile Include="Locations\Location.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
