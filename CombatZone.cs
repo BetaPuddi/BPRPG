@@ -1,29 +1,19 @@
 using System;
 using System.Collections.Generic;
-using BPRPG.Entities;
 
-namespace BPRPG.Locations.CombatZones
+namespace BPRPG
 {
-    public class Cemetery : CombatZone
+    public abstract class CombatZone : Location
     {
+        public static Entity CurrentEnemy { get; set; }
+        private static Enemy EnemyEntity { get; set; }
+        protected static List<Enemy> EnemyList { get; set; }
+        //public int ZoneLevel { get; set; }
 
 
-        public Cemetery()
+        protected static void StartCombat()
         {
-            Name = "Cemetery";
-            XCoordinate = 0;
-            YCoordinate = 0;
-            EnemyList = new List<Enemy>
-            {
-                new Skeleton(),
-                new Skeleton(),
-                new Zombie()
-            };
-        }
-
-        public static void StartCombat()
-        {
-            while (true)
+            while (EnemyList.Count > 0)
             {
                 EnemyEntity = EnemyList[0];
                 CurrentEnemy = EnemyEntity;
@@ -37,32 +27,28 @@ namespace BPRPG.Locations.CombatZones
 
                 if (GameManager.Instance.PlayerEntity.CurrentHealth <= 0)
                 {
-                    Console.WriteLine("You have been defeated!");
                     Console.WriteLine("Game Over!");
-                    Console.ReadLine();
+                    //Console.ReadLine();
                     Environment.Exit(0);
                 }
                 else if (CurrentEnemy.CurrentHealth <= 0)
                 {
                     Console.WriteLine("{0} has been defeated!", CurrentEnemy.Name);
+                    GameManager.Instance.PlayerEntity.AddMoney(CurrentEnemy.Money);
                     EnemyList.RemoveAt(0);
                     if (EnemyList.Count > 0)
                     {
                         continue;
                     }
-                    else
-                    {
-                        Console.WriteLine("You have defeated all enemies!");
-                        Console.WriteLine("You win!");
-                        Console.ReadLine();
-                        Environment.Exit(0);
-                    }
+
+                    Console.WriteLine("You have defeated all enemies!");
+                    Console.WriteLine("You win!");
+                    //Console.ReadLine();
+                    GameManager.StartGame();
                 }
 
                 break;
             }
         }
-
-        private static Enemy EnemyEntity { get; set; }
     }
 }

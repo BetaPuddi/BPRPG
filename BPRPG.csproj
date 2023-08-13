@@ -12,6 +12,7 @@
         <AssemblyName>BPRPG</AssemblyName>
         <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,20 +34,55 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="mscorlib" />
+        <Reference Include="NStack, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\NStack.Core.1.0.7\lib\netstandard2.0\NStack.dll</HintPath>
+        </Reference>
         <Reference Include="System"/>
+        <Reference Include="System.CodeDom, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+          <HintPath>packages\System.CodeDom.8.0.0-preview.7.23375.6\lib\net462\System.CodeDom.dll</HintPath>
+        </Reference>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
+        <Reference Include="System.Management" />
+        <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+          <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+        </Reference>
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Entities\Enemy.cs" />
-        <Compile Include="Entities\Entity.cs" />
-        <Compile Include="Entities\Player.cs" />
+        <Compile Include="Cemetery.cs">
+          <DependentUpon>CombatZone.cs</DependentUpon>
+        </Compile>
+        <Compile Include="CombatZone.cs">
+          <DependentUpon>Location.cs</DependentUpon>
+        </Compile>
+        <Compile Include="Enemy.cs">
+          <DependentUpon>Entity.cs</DependentUpon>
+        </Compile>
+        <Compile Include="EnemyFactory.cs" />
+        <Compile Include="Entity.cs" />
         <Compile Include="GameManager.cs" />
-        <Compile Include="Locations\CombatZones\Cemetery.cs" />
-        <Compile Include="Locations\CombatZones\CombatZone.cs" />
-        <Compile Include="Locations\Location.cs" />
+        <Compile Include="GameSession.cs" />
+        <Compile Include="HealthPotion.cs">
+          <DependentUpon>Item.cs</DependentUpon>
+        </Compile>
+        <Compile Include="Interfaces\Damageable.cs" />
+        <Compile Include="Interfaces\Healable.cs" />
+        <Compile Include="Interfaces\Useable.cs" />
+        <Compile Include="Item.cs" />
+        <Compile Include="Location.cs" />
+        <Compile Include="Player.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Town.cs">
+          <DependentUpon>Location.cs</DependentUpon>
+        </Compile>
+        <Compile Include="UndeadEnemies.cs">
+          <DependentUpon>Enemy.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
